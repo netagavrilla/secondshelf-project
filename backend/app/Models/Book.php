@@ -1,0 +1,20 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Book extends Model
+{
+    protected $fillable = [
+        'title',
+        'author',
+        'category',
+        'price',
+        'old_price',
+        'condition',
+        'cover_image',
+        'description',
+        'stock',
+    ];
+}
