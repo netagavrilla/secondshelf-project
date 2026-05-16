@@ -12,8 +12,23 @@ import {
 
 const router = useRouter()
 
+const search = ref('')
+
 const isLoggedIn = ref(false)
 const showUserMenu = ref(false)
+
+const submitSearch = () => {
+  const keyword = search.value.trim()
+
+  if (!keyword) return
+
+  router.push({
+    path: '/search',
+    query: {
+      q: keyword,
+    },
+  })
+}
 
 onMounted(() => {
   isLoggedIn.value = !!localStorage.getItem('token')
@@ -57,14 +72,23 @@ const logout = () => {
 
         <div class="navbar__right">
 
-          <div class="navbar__search">
-            <Search class="navbar__search-icon" :size="16" />
+          <form
+            class="navbar__search"
+            @submit.prevent="submitSearch"
+          >
+
+            <Search
+              class="navbar__search-icon"
+              :size="16"
+            />
 
             <input
+              v-model="search"
               type="text"
-              placeholder="Cari..."
+              placeholder="Cari buku atau penulis..."
             />
-          </div>
+
+          </form>
 
           <div class="navbar__actions">
 

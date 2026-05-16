@@ -17,11 +17,22 @@ const form = ref({
 })
 
 const coverFile = ref(null)
+const isDragging = ref(false)
 const errorMessage = ref('')
 const successMessage = ref('')
 
 const handleFile = (event) => {
   coverFile.value = event.target.files[0]
+}
+
+const handleDrop = (event) => {
+  isDragging.value = false
+
+  const files = event.dataTransfer.files
+
+  if (files.length > 0) {
+    coverFile.value = files[0]
+  }
 }
 
 const submitBook = async () => {
@@ -41,10 +52,7 @@ const submitBook = async () => {
       data.append('cover_file', coverFile.value)
     }
 
-    await axios.post(
-        'http://127.0.0.1:8000/api/books',
-        data
-        )
+    await axios.post('http://127.0.0.1:8000/api/books', data)
 
     successMessage.value = 'Buku berhasil ditambahkan!'
     errorMessage.value = ''
@@ -90,11 +98,21 @@ const submitBook = async () => {
         <div class="sell-row">
           <div class="sell-group">
             <label>Kategori</label>
-            <input v-model="form.category" type="text" />
+
+            <select v-model="form.category" required>
+              <option disabled value="">Pilih kategori</option>
+              <option>Novel</option>
+              <option>Komik</option>
+              <option>Pengetahuan</option>
+              <option>Anak-anak</option>
+              <option>Motivasi</option>
+              <option>Sejarah</option>
+            </select>
           </div>
 
           <div class="sell-group">
             <label>Kondisi</label>
+
             <select v-model="form.condition">
               <option>Baik</option>
               <option>Sangat Baik</option>
@@ -122,7 +140,35 @@ const submitBook = async () => {
 
         <div class="sell-group">
           <label>Cover Buku</label>
-          <input type="file" accept="image/*" @change="handleFile" />
+
+          <label
+            class="custom-file-upload"
+            :class="{ dragging: isDragging }"
+            @dragover.prevent="isDragging = true"
+            @dragleave.prevent="isDragging = false"
+            @drop.prevent="handleDrop"
+          >
+            <input
+              class="hidden-file-input"
+              type="file"
+              accept="image/*"
+              @change="handleFile"
+            />
+
+            <div class="custom-file-content">
+              <span class="upload-icon">+</span>
+
+              <div class="upload-text">
+                <strong>
+                  {{ coverFile ? coverFile.name : 'Upload Cover Buku' }}
+                </strong>
+
+                <small>
+                  Drag & drop gambar atau klik untuk upload
+                </small>
+              </div>
+            </div>
+          </label>
         </div>
 
         <div class="sell-group">

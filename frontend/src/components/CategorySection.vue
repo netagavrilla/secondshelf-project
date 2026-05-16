@@ -1,4 +1,6 @@
 <script setup>
+import { RouterLink } from 'vue-router'
+
 import {
   BookOpen,
   BookMarked,
@@ -21,20 +23,31 @@ const categories = [
 <template>
   <section class="categories" id="kategori">
     <div class="container">
+
       <div class="section-header">
         <h2>Kategori Buku</h2>
-        <p>Temukan buku dari genre favoritmu</p>
+
+        <p>
+          Temukan buku dari genre favoritmu
+        </p>
+
         <div class="section-bar"></div>
       </div>
 
       <div class="categories__grid">
-        <div
-          class="category-card"
+
+        <RouterLink
           v-for="category in categories"
           :key="category.name"
+          :to="`/category/${category.name}`"
+          class="category-card"
         >
+
           <div class="category-card__icon">
-            <component :is="category.icon" :size="24" />
+            <component
+              :is="category.icon"
+              :size="24"
+            />
           </div>
 
           <div class="category-card__name">
@@ -44,7 +57,9 @@ const categories = [
           <div class="category-card__count">
             Lihat koleksi
           </div>
-        </div>
+
+        </RouterLink>
+
       </div>
     </div>
   </section>

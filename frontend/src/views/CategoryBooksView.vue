@@ -1,23 +1,22 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, computed, onMounted } from 'vue'
+import { useRoute, RouterLink } from 'vue-router'
 import axios from 'axios'
-import { RouterLink } from 'vue-router'
-import { Heart, ShoppingCart, Eye } from 'lucide-vue-next'
+import { Eye, ShoppingCart, Heart } from 'lucide-vue-next'
 
+const route = useRoute()
 const books = ref([])
 
-const requireLogin = () => {
-  if (!localStorage.getItem('token')) {
-    window.location.href = '/login'
-    return false
-  }
+const categoryName = computed(() => route.params.name)
 
-  return true
-}
+const filteredBooks = computed(() => {
+  return books.value.filter((book) => {
+    return book.category?.toLowerCase() === categoryName.value.toLowerCase()
+  })
+})
 
 const getCoverUrl = (cover) => {
   if (!cover) return 'https://placehold.co/300x420?text=No+Cover'
-
   if (cover.startsWith('http')) return cover
   if (cover.startsWith('uploads/')) return `http://127.0.0.1:8000/${cover}`
   if (cover.startsWith('/storage')) return `http://127.0.0.1:8000${cover}`
@@ -26,18 +25,17 @@ const getCoverUrl = (cover) => {
   return `http://127.0.0.1:8000/storage/${cover}`
 }
 
-onMounted(async () => {
-  try {
-    const res = await axios.get('http://127.0.0.1:8000/api/books')
-    books.value = res.data
-  } catch (error) {
-    console.error('Gagal mengambil data buku:', error)
-  }
-})
+const formatRupiah = (value) => {
+  if (!value) return 'Harga belum tersedia'
+
+  return new Intl.NumberFormat('id-ID', {
+    style: 'currency',
+    currency: 'IDR',
+    minimumFractionDigits: 0,
+  }).format(value)
+}
 
 const addToWishlist = async (bookId) => {
-  if (!requireLogin()) return
-
   try {
     await axios.post('http://127.0.0.1:8000/api/wishlists', {
       book_id: bookId,
@@ -50,8 +48,6 @@ const addToWishlist = async (bookId) => {
 }
 
 const addToCart = async (bookId) => {
-  if (!requireLogin()) return
-
   try {
     await axios.post('http://127.0.0.1:8000/api/carts', {
       book_id: bookId,
@@ -64,53 +60,43 @@ const addToCart = async (bookId) => {
   }
 }
 
-const formatRupiah = (value) => {
-  if (!value) return 'Harga belum tersedia'
-
-  return new Intl.NumberFormat('id-ID', {
-    style: 'currency',
-    currency: 'IDR',
-    minimumFractionDigits: 0,
-  }).format(value)
-}
+onMounted(async () => {
+  try {
+    const res = await axios.get('http://127.0.0.1:8000/api/books')
+    books.value = res.data
+  } catch (error) {
+    console.error('Gagal mengambil data buku:', error)
+  }
+})
 </script>
 
 <template>
-  <section class="products" id="katalog">
+  <main class="category-books-page">
     <div class="container">
-
-      <div class="products__header">
-
-        <div class="products__header-left">
-          <h2>Produk Pilihan</h2>
-
-          <div class="section-bar"></div>
-        </div>
-
-        <a href="#" class="products__view-all">
-          Lihat semua →
-        </a>
-
+      <div class="category-books-header">
+        <span>Kategori Buku</span>
+        <h1>{{ categoryName }}</h1>
+        <p>
+          Menampilkan buku berdasarkan kategori {{ categoryName }}.
+        </p>
       </div>
 
-      <div class="products__grid">
-
+      <div
+        v-if="filteredBooks.length"
+        class="products__grid"
+      >
         <article
-          class="book-card"
-          v-for="book in books"
+          v-for="book in filteredBooks"
           :key="book.id"
+          class="book-card"
         >
-
           <div class="book-card__cover">
-
             <div class="book-card__cover-bg">
-
               <img
                 :src="getCoverUrl(book.cover_image)"
                 :alt="book.title"
                 class="book-card__img"
               />
-
             </div>
 
             <span class="book-card__badge badge--good">
@@ -120,22 +106,19 @@ const formatRupiah = (value) => {
             <button
               class="book-card__wish"
               type="button"
-              aria-label="Wishlist"
               @click="addToWishlist(book.id)"
             >
               <Heart />
             </button>
-
           </div>
 
           <div class="book-card__body">
-
             <h3 class="book-card__title">
-              {{ book.title || 'Nama buku belum tersedia' }}
+              {{ book.title }}
             </h3>
 
             <p class="book-card__author">
-              {{ book.author || 'Penulis belum tersedia' }}
+              {{ book.author }}
             </p>
 
             <p class="book-card__rating">
@@ -143,7 +126,6 @@ const formatRupiah = (value) => {
             </p>
 
             <div class="book-card__prices">
-
               <span class="book-card__price">
                 {{ formatRupiah(book.price) }}
               </span>
@@ -154,11 +136,9 @@ const formatRupiah = (value) => {
               >
                 {{ formatRupiah(book.old_price) }}
               </span>
-
             </div>
 
             <div class="book-card__actions">
-
               <RouterLink
                 :to="`/books/${book.id}`"
                 class="btn-detail"
@@ -175,14 +155,25 @@ const formatRupiah = (value) => {
                 <ShoppingCart />
                 Keranjang
               </button>
-
             </div>
-
           </div>
-
         </article>
+      </div>
 
+      <div
+        v-else
+        class="category-empty"
+      >
+        <h2>Belum ada buku di kategori ini</h2>
+        <p>Coba pilih kategori lain atau jual buku pertamamu.</p>
+
+        <RouterLink
+          to="/sell"
+          class="profile-add-btn"
+        >
+          Jual Buku
+        </RouterLink>
       </div>
     </div>
-  </section>
+  </main>
 </template>

@@ -1,11 +1,21 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
-import { useRouter } from 'vue-router'
+import { RouterLink, useRouter } from 'vue-router'
 import axios from 'axios'
 import { ShoppingCart, Trash2 } from 'lucide-vue-next'
 
 const router = useRouter()
 const carts = ref<any[]>([])
+
+const getCoverUrl = (cover: string) => {
+  if (!cover) return 'https://placehold.co/120x160?text=No+Cover'
+  if (cover.startsWith('http')) return cover
+  if (cover.startsWith('uploads/')) return `http://127.0.0.1:8000/${cover}`
+  if (cover.startsWith('/storage')) return `http://127.0.0.1:8000${cover}`
+  if (cover.startsWith('storage/')) return `http://127.0.0.1:8000/${cover}`
+
+  return `http://127.0.0.1:8000/storage/${cover}`
+}
 
 const getCarts = async () => {
   try {
@@ -99,9 +109,18 @@ onMounted(getCarts)
         <p>Pilih buku yang ingin kamu checkout.</p>
       </div>
 
-      <div v-if="carts.length === 0" class="empty-box">
-        <ShoppingCart :size="24" />
-        <span>Keranjang masih kosong.</span>
+      <div v-if="carts.length === 0" class="empty-box empty-box--cart">
+        <ShoppingCart :size="42" />
+
+        <h3>Keranjang masih kosong</h3>
+
+        <p>
+          Yuk cari buku favoritmu di SecondShelf.
+        </p>
+
+        <RouterLink to="/" class="empty-btn">
+          Mulai Belanja
+        </RouterLink>
       </div>
 
       <div v-else class="cart-layout">
@@ -118,14 +137,32 @@ onMounted(getCarts)
             />
 
             <img
-              :src="item.book?.cover_image || 'https://placehold.co/120x160?text=No+Cover'"
+              :src="getCoverUrl(item.book?.cover_image)"
               :alt="item.book?.title"
               class="cart-img"
             />
 
             <div class="cart-info">
-              <h3>{{ item.book?.title }}</h3>
-              <p>{{ item.book?.author }}</p>
+              <div class="cart-info-top">
+                <div>
+                  <h3>{{ item.book?.title }}</h3>
+                  <p>{{ item.book?.author }}</p>
+
+                  <div class="cart-meta">
+                    <span>{{ item.book?.category || 'Buku' }}</span>
+                    <span>{{ item.book?.condition || 'Baik' }}</span>
+                  </div>
+                </div>
+
+                <button
+                  class="btn-delete"
+                  type="button"
+                  @click="removeCart(item.id)"
+                >
+                  <Trash2 :size="15" />
+                  Hapus
+                </button>
+              </div>
 
               <strong class="price">
                 {{ formatRupiah(item.book?.price || 0) }}
@@ -154,15 +191,6 @@ onMounted(getCarts)
                 </strong>
               </p>
             </div>
-
-            <button
-              class="btn-delete"
-              type="button"
-              @click="removeCart(item.id)"
-            >
-              <Trash2 :size="15" />
-              Hapus
-            </button>
           </div>
         </div>
 
@@ -187,6 +215,7 @@ onMounted(getCarts)
           <button
             class="cart-checkout-btn"
             type="button"
+            :disabled="selectedCarts.length === 0"
             @click="checkoutCart"
           >
             Checkout
