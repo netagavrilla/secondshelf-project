@@ -5,6 +5,8 @@ use App\Http\Controllers\BookController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\WishlistController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\AuthController;
+
 
 Route::get('/books', [BookController::class, 'index']);
 Route::post('/books', [BookController::class, 'store']);
@@ -21,3 +23,8 @@ Route::delete('/wishlists/{id}', [WishlistController::class, 'destroy']);
 Route::post('/orders', [OrderController::class, 'store']);
 Route::post('/xendit/webhook', [OrderController::class, 'webhook']);
 Route::get('/orders', [OrderController::class, 'index']);
+
+Route::post('/register', [AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login']);
+
+Route::middleware('auth:sanctum')->post('/logout', [AuthController::class, 'logout']);

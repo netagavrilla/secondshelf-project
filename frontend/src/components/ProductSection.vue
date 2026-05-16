@@ -15,6 +15,10 @@ const getCoverUrl = (cover) => {
     return cover
   }
 
+  if (cover.startsWith('uploads/')) {
+    return `http://127.0.0.1:8000/${cover}`
+  }
+
   if (cover.startsWith('/storage')) {
     return `http://127.0.0.1:8000${cover}`
   }

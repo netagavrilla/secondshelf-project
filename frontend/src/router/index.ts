@@ -9,6 +9,10 @@ import CheckoutView from '@/views/CheckoutView.vue'
 import PaymentSuccessView from '@/views/PaymentSuccessView.vue'
 import PaymentFailedView from '@/views/PaymentFailedView.vue'
 import OrdersView from '@/views/OrdersView.vue'
+import LoginView from '@/views/LoginView.vue'
+import RegisterView from '@/views/RegisterView.vue'
+import ProfileView from '@/views/ProfileView.vue'
+import SellView from '@/views/SellView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -57,7 +61,26 @@ const router = createRouter({
         path: '/orders',
         name: 'orders',
         component: OrdersView,
-      }
+      },
+      {
+        path: '/login',
+        component: LoginView,
+      },
+
+      {
+        path: '/register',
+        component: RegisterView,
+      },
+      {
+        path: '/profile',
+        component: ProfileView,
+        meta: { requiresAuth: true },
+      },
+      {
+        path: '/sell',
+        component: SellView,
+        meta: { requiresAuth: true },
+      },
   ]
   
 })

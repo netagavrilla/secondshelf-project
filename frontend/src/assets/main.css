@@ -2073,3 +2073,534 @@
     margin-top: 8px;
   }
 }
+
+.navbar__user-menu {
+  position: relative;
+}
+
+.navbar__dropdown {
+  position: absolute;
+  right: 0;
+  top: 45px;
+  min-width: 140px;
+  background: white;
+  border-radius: 12px;
+  padding: 8px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+  z-index: 999;
+}
+
+.navbar__dropdown a,
+.navbar__dropdown button {
+  width: 100%;
+  display: block;
+  padding: 10px 12px;
+  border: none;
+  background: transparent;
+  text-align: left;
+  text-decoration: none;
+  color: #554224;
+  font-size: 14px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.navbar__login-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.16);
+  color: #fff;
+  text-decoration: none;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 0;
+  transition: 0.2s ease;
+}
+
+.navbar__login-btn svg {
+  width: 20px;
+  height: 20px;
+}
+
+.navbar__login-btn:hover {
+  background: rgba(255, 255, 255, 0.28);
+  transform: translateY(-1px);
+}
+
+.auth-page {
+  min-height: 100vh;
+  background:
+    linear-gradient(
+      rgba(248, 239, 228, 0.92),
+      rgba(248, 239, 228, 0.92)
+    ),
+    url('https://images.unsplash.com/photo-1521587760476-6c12a4b040da?q=80&w=1600&auto=format&fit=crop');
+  background-size: cover;
+  background-position: center;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 32px;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 460px;
+
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(10px);
+
+  border-radius: 32px;
+
+  padding: 42px;
+
+  box-shadow:
+    0 24px 60px rgba(85, 66, 36, 0.18);
+}
+
+.auth-top h1 {
+  font-family: "Playfair Display", serif;
+  font-size: 42px;
+  color: #792c18;
+  margin-bottom: 10px;
+}
+
+.auth-top p {
+  color: #6f6254;
+  line-height: 1.7;
+  margin-bottom: 28px;
+}
+
+.auth-form {
+  display: grid;
+  gap: 18px;
+}
+
+.auth-group {
+  display: grid;
+  gap: 8px;
+}
+
+.auth-group label {
+  font-size: 14px;
+  font-weight: 700;
+  color: #554224;
+}
+
+.auth-group input {
+  width: 100%;
+
+  border: 1px solid #e7d5c0;
+
+  border-radius: 16px;
+
+  padding: 14px 16px;
+
+  background: #fff;
+
+  font-size: 15px;
+
+  outline: none;
+
+  transition: 0.2s ease;
+}
+
+.auth-group input:focus {
+  border-color: #9b7a30;
+  box-shadow: 0 0 0 4px rgba(155, 122, 48, 0.12);
+}
+
+.auth-button {
+  margin-top: 8px;
+
+  border: none;
+
+  border-radius: 999px;
+
+  padding: 15px;
+
+  background: #792c18;
+
+  color: white;
+
+  font-size: 15px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.auth-button:hover {
+  background: #5e1f10;
+  transform: translateY(-1px);
+}
+
+.auth-switch {
+  margin-top: 24px;
+
+  text-align: center;
+
+  color: #6f6254;
+}
+
+.auth-switch a {
+  color: #792c18;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.auth-error {
+  margin-bottom: 18px;
+
+  background: #ffe7e7;
+
+  color: #c0392b;
+
+  border-radius: 14px;
+
+  padding: 12px 14px;
+
+  font-size: 14px;
+}
+
+.profile-page {
+  min-height: 100vh;
+  padding: 110px 0 80px;
+  background: #f8efe4;
+}
+
+.profile-header {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-bottom: 28px;
+}
+
+.profile-avatar {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: #792c18;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 14px 30px rgba(121, 44, 24, 0.22);
+}
+
+.profile-header h1 {
+  font-family: "Playfair Display", serif;
+  font-size: 36px;
+  color: #792c18;
+  margin-bottom: 4px;
+}
+
+.profile-header p {
+  color: #7a6a58;
+}
+
+.profile-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px;
+  margin-bottom: 22px;
+}
+
+.profile-card {
+  background: #fff;
+  border-radius: 24px;
+  padding: 26px;
+  box-shadow: 0 16px 40px rgba(85, 66, 36, 0.12);
+}
+
+.profile-card__title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #792c18;
+  margin-bottom: 18px;
+}
+
+.profile-card__title h2 {
+  font-size: 20px;
+  margin: 0;
+}
+
+.profile-info {
+  display: grid;
+  gap: 14px;
+  margin-bottom: 22px;
+}
+
+.profile-info p {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #f0dfca;
+}
+
+.profile-info span {
+  color: #7a6a58;
+}
+
+.profile-info strong {
+  color: #554224;
+}
+
+.profile-btn,
+.profile-add-btn {
+  border: none;
+  border-radius: 999px;
+  padding: 12px 18px;
+  background: #792c18;
+  color: #fff;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.profile-btn:hover,
+.profile-add-btn:hover {
+  background: #5e1f10;
+}
+
+.profile-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.profile-stats div {
+  background: #f8efe4;
+  border-radius: 18px;
+  padding: 18px;
+  text-align: center;
+}
+
+.profile-stats strong {
+  display: block;
+  font-size: 28px;
+  color: #792c18;
+}
+
+.profile-stats span {
+  font-size: 13px;
+  color: #7a6a58;
+}
+
+.profile-section {
+  margin-bottom: 22px;
+}
+
+.profile-section__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.seller-books {
+  display: grid;
+  gap: 14px;
+}
+
+.seller-book-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 18px;
+  padding: 18px;
+  border: 1px solid #f0dfca;
+  border-radius: 18px;
+  background: #fffaf3;
+}
+
+.seller-book-card h3 {
+  color: #554224;
+  margin-bottom: 6px;
+}
+
+.seller-book-card p {
+  color: #9b7a30;
+  font-weight: 700;
+}
+
+.seller-book-meta {
+  text-align: right;
+}
+
+.seller-book-meta span {
+  display: inline-block;
+  background: #e8f7ec;
+  color: #247a3d;
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-weight: 700;
+  font-size: 13px;
+  margin-bottom: 6px;
+}
+
+.seller-book-meta small {
+  display: block;
+  color: #7a6a58;
+}
+
+.profile-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.profile-btn--danger {
+  background: #b42318;
+}
+
+.profile-btn--danger:hover {
+  background: #8f1c13;
+}
+
+@media (max-width: 768px) {
+  .profile-page {
+    padding: 90px 0 60px;
+  }
+
+  .profile-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .profile-section__header,
+  .seller-book-card {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .seller-book-meta {
+    text-align: left;
+  }
+
+  .profile-stats {
+    grid-template-columns: 1fr;
+  }
+}
+
+.sell-page {
+  min-height: 100vh;
+  padding: 110px 20px 80px;
+  background: #f8efe4;
+  display: flex;
+  justify-content: center;
+}
+
+.sell-card {
+  width: 100%;
+  max-width: 760px;
+  background: #fff;
+  border-radius: 28px;
+  padding: 38px;
+  box-shadow: 0 18px 45px rgba(85, 66, 36, 0.14);
+}
+
+.sell-header span {
+  display: inline-block;
+  background: #f7eadc;
+  color: #792c18;
+  font-weight: 800;
+  border-radius: 999px;
+  padding: 8px 14px;
+  margin-bottom: 14px;
+}
+
+.sell-header h1 {
+  font-family: "Playfair Display", serif;
+  font-size: 38px;
+  color: #792c18;
+  margin-bottom: 8px;
+}
+
+.sell-header p {
+  color: #7a6a58;
+  margin-bottom: 28px;
+}
+
+.sell-form {
+  display: grid;
+  gap: 18px;
+}
+
+.sell-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+
+.sell-group {
+  display: grid;
+  gap: 8px;
+}
+
+.sell-group label {
+  font-weight: 700;
+  color: #554224;
+}
+
+.sell-group input,
+.sell-group select,
+.sell-group textarea {
+  width: 100%;
+  border: 1px solid #ead8c2;
+  border-radius: 14px;
+  padding: 13px 15px;
+  font-size: 15px;
+  outline: none;
+}
+
+.sell-group input:focus,
+.sell-group select:focus,
+.sell-group textarea:focus {
+  border-color: #9b7a30;
+}
+
+.sell-button {
+  margin-top: 8px;
+  border: none;
+  border-radius: 999px;
+  padding: 15px;
+  background: #792c18;
+  color: #fff;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.sell-button:hover {
+  background: #5e1f10;
+}
+
+.auth-success {
+  background: #e8f7ec;
+  color: #247a3d;
+  padding: 12px 14px;
+  border-radius: 14px;
+  margin-bottom: 18px;
+}
+
+@media (max-width: 700px) {
+  .sell-row {
+    grid-template-columns: 1fr;
+  }
+
+  .sell-card {
+    padding: 28px;
+  }
+}

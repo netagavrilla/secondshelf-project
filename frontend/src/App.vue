@@ -1,11 +1,21 @@
 <script setup>
+import { computed } from 'vue'
+import { useRoute, RouterView } from 'vue-router'
+
 import NavBar from './components/NavBar.vue'
 import FooterSection from './components/FooterSection.vue'
-import { RouterView } from 'vue-router'
+
+const route = useRoute()
+
+const hideLayout = computed(() => {
+  return route.path === '/login' || route.path === '/register'
+})
 </script>
 
 <template>
-  <NavBar />
+  <NavBar v-if="!hideLayout" />
+
   <RouterView />
-  <FooterSection />
+
+  <FooterSection v-if="!hideLayout" />
 </template>

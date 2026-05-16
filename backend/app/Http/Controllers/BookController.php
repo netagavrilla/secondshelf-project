@@ -29,14 +29,18 @@ class BookController extends Controller
     {
         $coverImage = null;
 
-        // Kalau user input link gambar
         if ($request->cover_image && !$request->hasFile('cover_file')) {
             $coverImage = $request->cover_image;
         }
 
-        // Kalau user upload file gambar
         if ($request->hasFile('cover_file')) {
-            $coverImage = $request->file('cover_file')->store('books', 'public');
+            $file = $request->file('cover_file');
+
+            $filename = time() . '_' . $file->getClientOriginalName();
+
+            $file->move(public_path('uploads/books'), $filename);
+
+            $coverImage = 'uploads/books/' . $filename;
         }
 
         $book = Book::create([
